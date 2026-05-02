@@ -424,6 +424,7 @@ const testimonials = [
 export default function App() {
   const [mousePosition, setMousePosition] = useState({ x: -100, y: -100 });
   const [activeProject, setActiveProject] = useState(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const updateMousePosition = (ev) => {
@@ -495,7 +496,7 @@ export default function App() {
         style={{ left: mousePosition.x, top: mousePosition.y }}
       />
 
-      {/* NAVIGATION */}
+ {/* NAVIGATION */}
       <nav className="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-[#0A0A0F]/70 border-b border-white/5">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="font-display font-bold text-xl tracking-wider text-white flex items-center gap-2">
@@ -512,10 +513,47 @@ export default function App() {
           <a href="#contact" className="hidden md:inline-flex items-center gap-2 px-4 py-2 bg-[#3B82F6] text-white text-sm font-semibold font-display hover:bg-cyan-500 transition-colors">
             Hire Me <ChevronRight size={14} />
           </a>
-          <button className="md:hidden text-white">
-            <Layout size={24} />
+          <button
+            className="md:hidden text-white p-2 -mr-2"
+            onClick={() => setMobileMenuOpen(prev => !prev)}
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            ) : (
+              <Layout size={24} />
+            )}
           </button>
         </div>
+ 
+        {/* Mobile dropdown menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-[#0A0A0F] border-t border-white/10 px-6 py-4 flex flex-col gap-4">
+            {[
+              { href: "#about", label: "About" },
+              { href: "#projects", label: "Projects" },
+              { href: "#skills", label: "Skills" },
+              { href: "#experience", label: "Experience" },
+              { href: "#contact", label: "Contact" },
+            ].map(link => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-[#9CA3AF] hover:text-white transition-colors text-base py-1 border-b border-white/5 last:border-0"
+              >
+                {link.label}
+              </a>
+            ))}
+            <a
+              href="#contact"
+              onClick={() => setMobileMenuOpen(false)}
+              className="mt-2 inline-flex items-center justify-center gap-2 px-4 py-3 bg-[#3B82F6] text-white text-sm font-semibold font-display hover:bg-cyan-500 transition-colors"
+            >
+              Hire Me <ChevronRight size={14} />
+            </a>
+          </div>
+        )}
       </nav>
 
       {/* ─── 1. HERO ─── */}
@@ -533,13 +571,13 @@ export default function App() {
           </Reveal>
 
           <Reveal delay={100}>
-            <h1 className="font-display text-5xl md:text-7xl lg:text-[5.5rem] font-bold uppercase tracking-tight leading-[1.05] text-white">
-              Saya membangun sistem digital yang menggabungkan<br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-cyan-400">desain, teknologi, dan komunikasi </span><br />
-             untuk menciptakan <br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#E5E7EB] to-[#9CA3AF]">impact nyata</span>
-            </h1>
-          </Reveal>
+  <h1 className="font-display text-[2rem] sm:text-5xl md:text-7xl lg:text-[5.5rem] font-bold uppercase tracking-tight leading-[1.1] text-white break-words hyphens-auto w-full">
+    Saya membangun<br className="sm:hidden" /> sistem digital<br className="sm:hidden" /> yang menggabungkan <br className="hidden md:block" />
+    <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-cyan-400">desain, teknologi,<br className="sm:hidden" /> dan komunikasi </span><br />
+    untuk menciptakan <br className="hidden md:block" />
+    <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#E5E7EB] to-[#9CA3AF]">impact nyata</span>
+  </h1>
+</Reveal>
 
           <Reveal delay={250}>
             <p className="mt-8 text-lg md:text-xl text-[#9CA3AF] max-w-2xl font-light leading-relaxed">
@@ -550,7 +588,7 @@ export default function App() {
           <Reveal delay={400}>
             <div className="mt-6 border-l-2 border-[#3B82F6] pl-4 flex gap-8 flex-wrap">
               <div>
-                <p className="text-2xl font-bold text-white font-display">350+</p>
+                <p className="text-2xl font-bold text-white font-display">500+</p>
                 <p className="text-xs text-[#6B7280] mt-1">Proyek Selesai</p>
               </div>
               <div>
@@ -645,8 +683,8 @@ export default function App() {
         <div className="max-w-5xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
-              { num: "50+", label: "Konten Diproduksi" },
-              { num: "10+", label: "Proyek Desain" },
+              { num: "100+", label: "Konten Diproduksi" },
+              { num: "500+", label: "Proyek Desain" },
               { num: "3+", label: "Website Dibangun" },
               { num: "2×", label: "Rata-rata Peningkatan Engagement" },
             ].map((stat, idx) => (
